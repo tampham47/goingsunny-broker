@@ -1,0 +1,33 @@
+{
+	"apps": [
+		{
+			"exec_mode": "fork_mode",
+			"name": "gsun-broker",
+			"script": "index.js",
+			"watch": false,
+			"ignore_watch": [
+				"node_modules",
+				"log"
+			],
+			"watch_options": {
+				"followSymlinks": false
+			},
+			"env": {
+				"NODE_ENV": "development",
+				"LOG": 1,
+				"PORT": 5550,
+				"HOST_PATH": "dev.goingsunny.com"
+			},
+			"env_production": {
+				"NODE_ENV": "production",
+				"PORT": 5500,
+				"HOST_PATH": "goingsunny.com"
+			},
+			"env_staging": {
+				"NODE_ENV": "staging",
+				"PORT": 5500,
+				"HOST_PATH": "stag.goingsunny.com"
+			}
+		}
+	]
+}

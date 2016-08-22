@@ -11,8 +11,8 @@ module.exports = {
   port: 5550,
   http: {
     port: 5551,
-    // static: __dirname + "/public",
-    // bundle: true
+    static: __dirname + "/public",
+    bundle: true
   },
   logger: {
     level: 'debug'
