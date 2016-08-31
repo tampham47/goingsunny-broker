@@ -4,6 +4,7 @@
   "description": "goingsunny broker",
   "main": "index.js",
   "scripts": {
+    "start": "PORT=5550 nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "togoingsunny": "ssh -i _deploy/goingsunny.pem centos@52.77.217.160",
     "deploy_dev": "ssh -t -i _deploy/goingsunny.pem centos@52.77.217.160 'cd prod/gsun-broker && sudo git pull && pm2 startOrRestart pm2.json --env development'",
@@ -19,6 +20,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.14.0",
-    "mosca": "^2.0.2"
+    "mosca": "^2.0.2",
+    "superagent": "^2.2.0"
   }
 }
