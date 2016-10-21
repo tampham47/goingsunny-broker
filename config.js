@@ -5,8 +5,8 @@
 
 var mosca = require('mosca');
 
-var SECURE_KEY =  process.env.SECURE_KEY || '/etc/letsencrypt/live/goingsunny.com/privkey.pem';
-var SECURE_CERT = process.env.SECURE_CERT || '/etc/letsencrypt/live/goingsunny.com/fullchain.pem';
+var SECURE_KEY =  process.env.SECURE_KEY || '/etc/letsencrypt/live/broker.goingsunny.com/privkey.pem';
+var SECURE_CERT = process.env.SECURE_CERT || '/etc/letsencrypt/live/broker.goingsunny.com/fullchain.pem';
 
 module.exports = {
   id: 'mymosca', // used to publish in the $SYS/<id> topicspace
