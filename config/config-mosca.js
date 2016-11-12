@@ -3,19 +3,12 @@
  * Tw
  */
 
-var mosca = require('mosca');
+import mosca from 'mosca';
 
-// var SECURE_KEY =  process.env.SECURE_KEY || '/etc/letsencrypt/live/broker.goingsunny.com/privkey.pem';
-// var SECURE_CERT = process.env.SECURE_CERT || '/etc/letsencrypt/live/broker.goingsunny.com/fullchain.pem';
-
-module.exports = {
+export default {
   id: 'mymosca', // used to publish in the $SYS/<id> topicspace
   stats: false, // publish stats in the $SYS/<id> topicspace
   port: 5550,
-  // secure : {
-  //   keyPath: SECURE_KEY,
-  //   certPath: SECURE_CERT,
-  // },
   http: {
     port: 5551,
     static: __dirname + '/public',

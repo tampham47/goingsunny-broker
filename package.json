@@ -4,11 +4,11 @@
   "description": "goingsunny broker",
   "main": "index.js",
   "scripts": {
-    "start": "PORT=5550 nodemon index.js",
+    "start": "NODE_PATH=./ PORT=5550 DEBUG=system nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "togoingsunny": "ssh -i _deploy/goingsunny.pem centos@52.77.217.160",
-    "deploy_dev": "ssh -t -i _deploy/goingsunny.pem centos@52.77.217.160 'cd prod/gsun-broker && sudo git pull && pm2 startOrRestart pm2.json --env development'",
-    "deploy_prod": "ssh -t -i _deploy/goingsunny.pem centos@52.77.217.160 'cd prod/gsun-broker && sudo git pull && pm2 startOrRestart pm2.json --env production'"
+    "togoingsunny": "ssh -i _deploy/goingsunny-oregon.pem centos@35.162.241.129",
+    "deploy_dev": "ssh -t -i _deploy/goingsunny-oregon.pem centos@35.162.241.129 'cd prod/gsun-broker && sudo git pull && pm2 startOrRestart pm2.json --env development'",
+    "deploy_prod": "ssh -t -i _deploy/goingsunny-oregon.pem centos@35.162.241.129 'cd prod/gsun-broker && sudo git pull && pm2 startOrRestart pm2.json --env production'"
   },
   "keywords": [
     "goingsunny",
@@ -22,5 +22,12 @@
     "express": "^4.14.0",
     "mosca": "^2.0.2",
     "superagent": "^2.2.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.18.2",
+    "babel-plugin-rewire": "^1.0.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-register": "^6.18.0",
+    "debug": "^2.3.2"
   }
 }
