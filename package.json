@@ -19,6 +19,7 @@
   "author": "Tw",
   "license": "ISC",
   "dependencies": {
+    "appearin-sdk": "0.0.4",
     "cron": "^1.1.1",
     "express": "^4.14.0",
     "mosca": "^2.0.2",

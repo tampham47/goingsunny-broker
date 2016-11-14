@@ -7,7 +7,6 @@ import DebugM from 'debug';
 import superAgent from 'superagent';
 import configMosca from 'config/config-mosca';
 import handleMessage from 'libs/handle-message';
-import handleMeeting from 'libs/handle-meeting';
 import setupMeeting from 'libs/setup-meeting';
 import { CronJob } from 'cron';
 
@@ -52,7 +51,7 @@ server.on('published', function(packet, client) {
       break;
 
     case 'goingsunny_system_meeting':
-      handleMeeting(packet, client);
+      // handleMeeting(packet, client);
       break;
     default:
   }
