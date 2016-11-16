@@ -12,19 +12,26 @@ import { CronJob } from 'cron';
 
 var server = new mosca.Server(configMosca);
 var debug = DebugM('system');
+
+var arrangeSchedule = function() {
+  debug('CRONJOB is working.');
+  setupMeeting(server);
+};
+
 var job01 = new CronJob({
   // cronTime: '00 30 11 * * 1-5',
   cronTime: '*/5 * * * * *',
   onTick: function() {
-    debug('CRONJOB is working.');
-    setupMeeting(server);
+    arrangeSchedule();
   },
   start: false,
 });
 var job02 = new CronJob({
   cronTime: '30 * * * * *',
   onTick: function() {
+    arrangeSchedule();
   },
+  start: false
 });
 
 // init app

@@ -5,6 +5,7 @@
 import config from 'config/config';
 import superAgent from 'superagent';
 import utils from 'libs/utils';
+import randomWord from 'random-word';
 import DebugM from 'debug';
 var debug = DebugM('system');
 
@@ -18,8 +19,8 @@ export default function(server) {
     })
   })
   .end(function(err, res){
-    debug('supperagent', res.body);
-    var sessionList = res.body;
+    debug('supperagent', res && res.body);
+    var sessionList = res ? res.body : [];
 
     sessionList.forEach(function(i) {
       debug('sessionList each', i);
@@ -27,7 +28,7 @@ export default function(server) {
       var message = {
         topic: `SYSTEM_${i._user}`,
         payload: JSON.stringify({
-          channel: 'gsun-' + Math.round(Math.random() * 1000),
+          channel: randomWord(),
           data: i
         })
       };
