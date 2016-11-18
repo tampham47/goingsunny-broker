@@ -21,18 +21,25 @@ export default function(server) {
   .end(function(err, res){
     debug('supperagent', res && res.body);
     var sessionList = res ? res.body : [];
+    var channel = randomWord();
+    var count = 0;
 
     sessionList.forEach(function(i) {
-      debug('sessionList each', i);
-
       var message = {
         topic: `SYSTEM_${i._user}`,
         payload: JSON.stringify({
-          channel: randomWord(),
+          channel: channel,
           data: i
         })
       };
+      debug('sessionList', message.topic, message.payload, i);
       server.publish(message);
+
+      count++;
+      if (count >= 2) {
+        count = 0;
+        channel = randomWord();
+      }
     });
 
   });

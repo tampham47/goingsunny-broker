@@ -4,7 +4,7 @@
   "description": "goingsunny broker",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_PATH=./ PORT=5550 nodemon index.js",
+    "start": "DEBUG=system NODE_PATH=./ PORT=5550 nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "togoingsunny": "ssh -i _deploy/goingsunny-oregon.pem centos@35.162.241.129",
     "deploy_dev": "ssh -t -i _deploy/goingsunny-oregon.pem centos@35.162.241.129 'cd prod/gsun-broker && sudo git pull && pm2 startOrRestart pm2.json --env development'",
