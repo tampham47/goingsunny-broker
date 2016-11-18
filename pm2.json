@@ -17,6 +17,7 @@
 				"LOG": 1,
 				"PORT": 5550,
 				"NODE_PATH": "./",
+				"DEBUG": "system",
 				"HOST_PATH": "dev.goingsunny.com"
 			},
 			"env_production": {
