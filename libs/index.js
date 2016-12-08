@@ -6,8 +6,8 @@ import mosca from 'mosca';
 import DebugM from 'debug';
 import superAgent from 'superagent';
 import configMosca from 'config/config-mosca';
-import handleMessage from 'libs/handle-message';
-import setupMeeting from 'libs/setup-meeting';
+import handleMessage from 'libs/HandleMessage';
+import setupMeeting from 'libs/SetupSchedule';
 import { CronJob } from 'cron';
 
 var server = new mosca.Server(configMosca);

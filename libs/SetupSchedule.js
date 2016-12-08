@@ -7,6 +7,8 @@ import superAgent from 'superagent';
 import utils from 'libs/utils';
 import randomWord from 'random-word';
 import DebugM from 'debug';
+import request from 'libs/BrokerRequest';
+
 var debug = DebugM('system');
 
 export default function(server) {
@@ -36,13 +38,17 @@ export default function(server) {
       debug('sessionList', message.topic, message.payload, i);
       server.publish(message);
 
-      superAgent.put(`${config.API_PATH}/session/${i._id}`)
-      .set('Content-Type', 'application/json')
-      .send(JSON.stringify({
-        roomName: channel
-      }))
-      .end(function(err, res) {
-        console.log('Schedule', i._id, channel);
+      request({
+        method: 'PUT',
+        functionName: `session/${i._id}`,
+        body: JSON.stringify({
+          roomName: channel
+        })
+      }).then(function(body) {
+        debug('Schedule', 'DONE');
+      })
+      .catch(function(err) {
+        debug('Schedule', err);
       });
 
       count++;

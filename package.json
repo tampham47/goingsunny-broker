@@ -22,9 +22,11 @@
     "appearin-sdk": "0.0.4",
     "cron": "^1.1.1",
     "express": "^4.14.0",
+    "lodash": "^4.17.2",
     "moment": "^2.16.0",
     "mosca": "^2.0.2",
     "random-word": "^1.0.2",
+    "request": "^2.79.0",
     "superagent": "^2.2.0"
   },
   "devDependencies": {
