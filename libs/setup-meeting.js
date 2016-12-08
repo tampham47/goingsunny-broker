@@ -36,6 +36,15 @@ export default function(server) {
       debug('sessionList', message.topic, message.payload, i);
       server.publish(message);
 
+      superAgent.put(`${config.API_PATH}/session/${i._id}`)
+      .set('Content-Type', 'application/json')
+      .send(JSON.stringify({
+        roomName: channel
+      }))
+      .end(function(err, res) {
+        console.log('Schedule', i._id, channel);
+      });
+
       count++;
       if (count >= 2) {
         count = 0;

@@ -19,14 +19,8 @@ var arrangeSchedule = function() {
 };
 
 var job01 = new CronJob({
-  cronTime: '59 29 * * * *',
-  onTick: function() {
-    arrangeSchedule();
-  },
-  start: false,
-});
-var job02 = new CronJob({
-  cronTime: '59 59 * * * *',
+  // cronTime: '59 * * * * *',
+  cronTime: '59 29,59 * * * *',
   onTick: function() {
     arrangeSchedule();
   },
@@ -36,7 +30,6 @@ var job02 = new CronJob({
 // init app
 debug('STARTED!');
 job01.start();
-job02.start();
 
 server.on('error', function(err){
   debug('ERROR', err);
