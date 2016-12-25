@@ -7,6 +7,7 @@ import DebugM from 'debug';
 import superAgent from 'superagent';
 import configMosca from 'config/config-mosca';
 import handleMessage from 'libs/HandleMessage';
+import handleJoinClass from 'libs/HandleJoinClass';
 import setupMeeting from 'libs/SetupSchedule';
 import { CronJob } from 'cron';
 
@@ -46,8 +47,12 @@ server.on('published', function(packet, client) {
   debug('>>>PACKET', packet.topic);
 
   switch (packet.topic) {
+    case 'join-class':
+      handleJoinClass(packet, client, server);
+      break;
+
     case 'goingsunny':
-      handleMessage(packet, client);
+      handleMessage(packet, client, server);
       break;
 
     case 'goingsunny_system_meeting':
