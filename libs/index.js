@@ -43,10 +43,13 @@ server.on('clientConnected', function(client) {
 });
 
 setInterval(function() {
+  console.log('server', Object.keys(server.clients).length);
   server.publish({
     topic: 'goingsunny_system_meeting',
     payload: JSON.stringify({
       server: new Date(),
+      clients: Object.keys(server.clients),
+      count: Object.keys(server.clients).length,
     })
   });
 }, 3000);
