@@ -40,6 +40,13 @@ server.on('ready', function(){
 })
 server.on('clientConnected', function(client) {
   debug('client connected', client.id);
+  server.publish({
+    topic: 'goingsunny_system_meeting',
+    payload: JSON.stringify({
+      client: client.id,
+      server: new Date(),
+    })
+  });
 });
 
 // fired when a message is received
