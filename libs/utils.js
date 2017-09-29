@@ -7,7 +7,7 @@ import moment from 'moment';
 var Utils = function() {};
 
 Utils.prototype.getSessionNameByDate = function() {
-  return date.format('YYYYMMDD');
+  return moment().format('YYYYMMDD');
 };
 
 Utils.prototype.parsePayload = function(payloadStr) {
