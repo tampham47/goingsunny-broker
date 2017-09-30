@@ -12,7 +12,6 @@ import request from 'libs/BrokerRequest';
 var debug = DebugM('system');
 
 export default function(server) {
-
   debug('SESSION_NAME', utils.getSessionNameByDate());
   superAgent.get(`${config.API_PATH}/session`)
   .set('Content-Type', 'application/json')
