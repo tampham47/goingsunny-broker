@@ -6,9 +6,10 @@ import mosca from 'mosca';
 import DebugM from 'debug';
 import superAgent from 'superagent';
 import configMosca from 'config/config-mosca';
-import handleJoinClass from 'libs/HandleJoinClass';
-import setupMeeting from 'libs/SetupSchedule';
 import { CronJob } from 'cron';
+
+import handleJoinClass from 'libs/HandleJoinClass';
+import setupMeeting from 'libs/SetupMetting';
 
 var server = new mosca.Server(configMosca);
 var debug = DebugM('system');

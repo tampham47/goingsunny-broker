@@ -4,11 +4,11 @@
 
 import config from 'config/config';
 import superAgent from 'superagent';
-import utils from 'libs/utils';
 import randomWord from 'random-word';
 import DebugM from 'debug';
-import request from 'libs/BrokerRequest';
 
+import utils from 'libs/utils';
+import request from 'libs/BrokerRequest';
 var debug = DebugM('system');
 
 export default function(server) {
@@ -57,7 +57,5 @@ export default function(server) {
         channel = randomWord();
       }
     });
-
   });
-
 };
