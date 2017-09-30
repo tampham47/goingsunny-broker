@@ -29,7 +29,6 @@ export default function(packet, client, server) {
   
   broadCastMessage(data, server);
 
-  console.log('HandleJoinClass', data);
   request({
     method: 'POST',
     functionName: 'session',
