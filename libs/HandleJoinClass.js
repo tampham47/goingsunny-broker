@@ -28,4 +28,17 @@ export default function(packet, client, server) {
   var data = utils.parsePayload(payloadStr);
   
   broadCastMessage(data, server);
+
+  request({
+    method: 'POST',
+    functionName: 'session',
+    body: JSON.stringify({
+      _user: data.user._id,
+      sessionName: data.session,
+    }),
+  })
+  .then(body => {
+    console.log('HandleJoinClass body', body);
+  })
+  .catch(err => {});
 }

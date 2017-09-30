@@ -6,10 +6,10 @@ import mosca from 'mosca';
 import DebugM from 'debug';
 import superAgent from 'superagent';
 import configMosca from 'config/config-mosca';
-import handleMessage from 'libs/HandleMessage';
-import handleJoinClass from 'libs/HandleJoinClass';
-import setupMeeting from 'libs/SetupSchedule';
 import { CronJob } from 'cron';
+
+import handleJoinClass from 'libs/HandleJoinClass';
+import setupMeeting from 'libs/SetupMetting';
 
 var server = new mosca.Server(configMosca);
 var debug = DebugM('system');
@@ -41,18 +41,6 @@ server.on('clientConnected', function(client) {
   debug('client connected', client.id);
 });
 
-setInterval(function() {
-  console.log('server', Object.keys(server.clients).length);
-  server.publish({
-    topic: 'goingsunny_system_meeting',
-    payload: JSON.stringify({
-      server: new Date(),
-      clients: Object.keys(server.clients),
-      count: Object.keys(server.clients).length,
-    })
-  });
-}, 3000);
-
 // fired when a message is received
 server.on('published', function(packet, client) {
   debug('>>>PACKET', packet.topic);
@@ -61,14 +49,7 @@ server.on('published', function(packet, client) {
     case 'join-class':
       handleJoinClass(packet, client, server);
       break;
-
-    case 'goingsunny':
-      handleMessage(packet, client, server);
+    default: 
       break;
-
-    case 'goingsunny_system_meeting':
-      // handleMeeting(packet, client);
-      break;
-    default:
   }
 });
