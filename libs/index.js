@@ -20,8 +20,7 @@ var arrangeSchedule = function() {
 };
 
 var job01 = new CronJob({
-  // cronTime: '59 * * * * *',
-  cronTime: '59 29,59 * * * *',
+  cronTime: '00 */2 * * * *', // every 2 mins
   onTick: function() {
     arrangeSchedule();
   },
