@@ -9,7 +9,6 @@ import configMosca from 'config/config-mosca';
 import handleJoinClass from 'libs/HandleJoinClass';
 import setupMeeting from 'libs/SetupSchedule';
 import { CronJob } from 'cron';
-// import handleMessage from 'libs/HandleMessage';
 
 var server = new mosca.Server(configMosca);
 var debug = DebugM('system');
@@ -40,18 +39,6 @@ server.on('ready', function(){
 server.on('clientConnected', function(client) {
   debug('client connected', client.id);
 });
-
-setInterval(function() {
-  console.log('server', Object.keys(server.clients).length);
-  server.publish({
-    topic: 'goingsunny_system_meeting',
-    payload: JSON.stringify({
-      server: new Date(),
-      clients: Object.keys(server.clients),
-      count: Object.keys(server.clients).length,
-    })
-  });
-}, 3000);
 
 // fired when a message is received
 server.on('published', function(packet, client) {
