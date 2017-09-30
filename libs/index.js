@@ -6,10 +6,10 @@ import mosca from 'mosca';
 import DebugM from 'debug';
 import superAgent from 'superagent';
 import configMosca from 'config/config-mosca';
-import handleMessage from 'libs/HandleMessage';
 import handleJoinClass from 'libs/HandleJoinClass';
 import setupMeeting from 'libs/SetupSchedule';
 import { CronJob } from 'cron';
+// import handleMessage from 'libs/HandleMessage';
 
 var server = new mosca.Server(configMosca);
 var debug = DebugM('system');
@@ -61,14 +61,7 @@ server.on('published', function(packet, client) {
     case 'join-class':
       handleJoinClass(packet, client, server);
       break;
-
-    case 'goingsunny':
-      handleMessage(packet, client, server);
+    default: 
       break;
-
-    case 'goingsunny_system_meeting':
-      // handleMeeting(packet, client);
-      break;
-    default:
   }
 });
