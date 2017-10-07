@@ -9,7 +9,6 @@ import request from 'libs/BrokerRequest';
 
 var debug = DebugM('HandleJoinClass');
 
-
 var broadCastMessage = function(payload, server) {
   var message = {
     topic: 'SYSTEM_CLASS_DATA',
@@ -26,8 +25,6 @@ var broadCastMessage = function(payload, server) {
 export default function(packet, client, server) {
   var payloadStr = packet.payload.toString();
   var data = utils.parsePayload(payloadStr);
-  
-  broadCastMessage(data, server);
 
   request({
     method: 'POST',
@@ -37,8 +34,14 @@ export default function(packet, client, server) {
       sessionName: data.session,
     }),
   })
-  .then(body => {
-    console.log('HandleJoinClass body', body);
+  .then(raw => {
+    const body = JSON.parse(raw);
+    if (body.statusCode === 400) {
+      return; //do nothing
+    }
+
+    // broadcast a joining message to all of clients
+    broadCastMessage(data, server);
   })
   .catch(err => {});
 }
