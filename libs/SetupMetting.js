@@ -17,11 +17,12 @@ export default function(server) {
   .set('Content-Type', 'application/json')
   .query({
     query: JSON.stringify({
-      sessionName: utils.getSessionNameByDate()
+      sessionName: utils.getSessionNameByDate(),
+      roomName: '',
     })
   })
   .end(function(err, res){
-    debug('supperagent', res && res.body);
+    console.log('supperagent', res && res.body);
     var sessionList = res ? res.body : [];
     var channel = randomWord();
     var count = 0;
