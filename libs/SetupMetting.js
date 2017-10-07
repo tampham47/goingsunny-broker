@@ -19,20 +19,23 @@ export default function(server) {
     query: JSON.stringify({
       sessionName: utils.getSessionNameByDate(),
       roomName: '',
-    })
+    }),
+    populate: '_user',
   })
   .end(function(err, res){
     console.log('supperagent', res && res.body);
     var sessionList = res ? res.body : [];
-    var channel = randomWord();
+    var room = randomWord();
     var count = 0;
 
-    sessionList.forEach(function(i) {
+    sessionList.forEach(function(i, index) {
+      var nextIndex = count === 0 ? index + 1 : index - 1;
+      var matched = sessionList[nextIndex] ? sessionList[nextIndex]._user : {};
       var message = {
-        topic: `SYSTEM_${i._user}`,
+        topic: `SYSTEM_${i._user._id}`,
         payload: JSON.stringify({
-          channel: channel,
-          data: i
+          room,
+          matched,
         })
       };
       debug('sessionList', message.topic, message.payload, i);
@@ -42,7 +45,7 @@ export default function(server) {
         method: 'PUT',
         functionName: `session/${i._id}`,
         body: JSON.stringify({
-          roomName: channel
+          roomName: room
         })
       }).then(function(body) {
         debug('Schedule', 'DONE');
@@ -54,7 +57,7 @@ export default function(server) {
       count++;
       if (count >= 2) {
         count = 0;
-        channel = randomWord();
+        room = randomWord();
       }
     });
   });
