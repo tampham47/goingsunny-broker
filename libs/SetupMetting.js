@@ -31,15 +31,25 @@ export default function(server) {
     sessionList.forEach(function(i, index) {
       var nextIndex = count === 0 ? index + 1 : index - 1;
       var matched = sessionList[nextIndex] ? sessionList[nextIndex]._user : {};
-      var message = {
-        topic: `SYSTEM_${i._user._id}`,
-        payload: JSON.stringify({
-          room,
-          matched,
-        })
-      };
-      debug('sessionList', message.topic, message.payload, i);
-      server.publish(message);
+
+      if (i._messenger) {
+        console.log('_messenger', i._messenger, room);
+        // https://api.chatfuel.com/bots/59f28d26e4b0640c0cdc9930/users/1198515213577392/send?chatfuel_token=mELtlMAHYqR0BvgEiMq8zVek3uYUK3OJMbtyrdNPTrQB9ndV0fM7lWTFZbM4MZvD&chatfuel_block_id=59f44008e4b0640c169bc44d&link=https://appear.in/xaolonist
+        superAgent.post(`https://api.chatfuel.com/bots/59f28d26e4b0640c0cdc9930/users/${i._messenger}/send?chatfuel_token=mELtlMAHYqR0BvgEiMq8zVek3uYUK3OJMbtyrdNPTrQB9ndV0fM7lWTFZbM4MZvD&chatfuel_block_id=59f44008e4b0640c169bc44d&link=https://appear.in/${room}`)
+        .set('Content-Type', 'application/json')
+        .end(function(err, res) {
+          console.log('chatfuel', err, res);
+        });
+      } else {
+        var message = {
+          topic: `SYSTEM_${i._user._id}`,
+          payload: JSON.stringify({
+            room,
+            matched,
+          })
+        };
+        server.publish(message);
+      }
 
       request({
         method: 'PUT',
