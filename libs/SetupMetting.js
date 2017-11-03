@@ -23,7 +23,6 @@ export default function(server) {
     populate: '_user',
   })
   .end(function(err, res){
-    console.log('supperagent', res && res.body);
     var sessionList = res ? res.body : [];
     var room = randomWord();
     var count = 0;
@@ -32,14 +31,14 @@ export default function(server) {
       var nextIndex = count === 0 ? index + 1 : index - 1;
       var matched = sessionList[nextIndex] ? sessionList[nextIndex]._user : {};
 
+      const botId = '59fc4cb4e4b02606ed00dbb5';
+      const token = '97pemuDTh2tINlcezl86IAF2O6ZXdnmddM0CenJGUr90D5XdSAuFT0IP8c1g9Rdf';
+      const block = '59fc4cb5e4b02606ed00de30';
+
       if (i._messenger) {
-        console.log('_messenger', i._messenger, room);
-        // https://api.chatfuel.com/bots/59f28d26e4b0640c0cdc9930/users/1198515213577392/send?chatfuel_token=mELtlMAHYqR0BvgEiMq8zVek3uYUK3OJMbtyrdNPTrQB9ndV0fM7lWTFZbM4MZvD&chatfuel_block_id=59f44008e4b0640c169bc44d&link=https://appear.in/xaolonist
-        superAgent.post(`https://api.chatfuel.com/bots/59f28d26e4b0640c0cdc9930/users/${i._messenger}/send?chatfuel_token=mELtlMAHYqR0BvgEiMq8zVek3uYUK3OJMbtyrdNPTrQB9ndV0fM7lWTFZbM4MZvD&chatfuel_block_id=59f44008e4b0640c169bc44d&link=https://appear.in/${room}`)
+        superAgent.post(`https://api.chatfuel.com/bots/${botId}/users/${i._messenger}/send?chatfuel_token=${token}&chatfuel_block_id=${block}&link=https://appear.in/${room}`)
         .set('Content-Type', 'application/json')
-        .end(function(err, res) {
-          console.log('chatfuel', err, res);
-        });
+        .end(function(err, res) {});
       } else {
         var message = {
           topic: `SYSTEM_${i._user._id}`,
