@@ -27,6 +27,11 @@ export default function(server) {
     var room = randomWord();
     var count = 0;
 
+    console.log('sessionList', sessionList.length);
+    if (sessionList.length % 2 !== 0) {
+      sessionList.pop();
+    }
+
     sessionList.forEach(function(i, index) {
       var nextIndex = count === 0 ? index + 1 : index - 1;
       var matched = sessionList[nextIndex] ? sessionList[nextIndex]._user : {};
