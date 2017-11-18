@@ -7,15 +7,15 @@ import superAgent from 'superagent';
 import configMosca from 'config/config-mosca';
 import { CronJob } from 'cron';
 
-// import handleJoinClass from './join-section';
-import setupMeeting from './metting';
+import joinSection from './join-section';
+import metting from './metting';
 
 var server = new mosca.Server(configMosca);
 
 var job01 = new CronJob({
   cronTime: '*/30 * * * * *', // every 30 sec
   onTick: function() {
-    setupMeeting(server);
+    metting(server);
   },
   start: false,
 });
@@ -40,7 +40,7 @@ server.on('published', function(packet, client) {
 
   switch (packet.topic) {
     case 'join-class':
-      // handleJoinClass(packet, client, server);
+      joinSection(packet, client, server);
       break;
     default: 
       break;
