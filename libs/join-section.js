@@ -5,7 +5,7 @@
 import superAgent from 'superagent';
 import DebugM from 'debug';
 import utils from 'libs/utils';
-import request from 'libs/BrokerRequest';
+import request from 'libs/request';
 
 var debug = DebugM('HandleJoinClass');
 

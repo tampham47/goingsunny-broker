@@ -5,14 +5,12 @@
 import config from 'config/config';
 import superAgent from 'superagent';
 import randomWord from 'random-word';
-import DebugM from 'debug';
 
 import utils from 'libs/utils';
-import request from 'libs/BrokerRequest';
-var debug = DebugM('system');
+import request from 'libs/request';
 
 export default function(server) {
-  debug('SESSION_NAME', utils.getSessionNameByDate());
+  console.log('SESSION_NAME', utils.getSessionNameByDate());
   superAgent.get(`${config.API_PATH}/session`)
   .set('Content-Type', 'application/json')
   .query({
@@ -62,10 +60,10 @@ export default function(server) {
           roomName: room
         })
       }).then(function(body) {
-        debug('Schedule', 'DONE');
+        console.log('Schedule', 'DONE');
       })
       .catch(function(err) {
-        debug('Schedule', err);
+        console.log('Schedule', err);
       });
 
       count++;
