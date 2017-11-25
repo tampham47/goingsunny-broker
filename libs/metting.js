@@ -10,8 +10,8 @@ import moment from 'moment';
 import request from 'libs/request';
 
 export default function(server) {
-  
-  superAgent.get(`${config.API_PATH}/session`)
+  superAgent
+  .get(`${config.API_PATH}/session`)
   .set('Content-Type', 'application/json')
   .query({
     query: JSON.stringify({
@@ -20,7 +20,7 @@ export default function(server) {
     }),
     populate: '_user',
   })
-  .end(function(err, res){
+  .end(function(err, res) {
     var mmdd = moment().format('MMDD');
     var sessionList = res ? res.body : [];
     var room = randomWord() + mmdd;

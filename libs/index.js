@@ -26,7 +26,7 @@ var job01 = new CronJob({
 // send notification for users who has subscribe this morning
 var job02 = new CronJob({
   // cronTime: '00 55 19 * * *', // 19h55 everyday
-  cronTime: '30 32 18 * * *', // 19h55 everyday
+  cronTime: '00 27 15 * * *', // 19h55 everyday
   onTick: function () {
     subscribe(server);
   },
