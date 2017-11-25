@@ -3,51 +3,63 @@
  */
 
 import mosca from 'mosca';
-import DebugM from 'debug';
 import superAgent from 'superagent';
 import configMosca from 'config/config-mosca';
 import { CronJob } from 'cron';
 
-import handleJoinClass from 'libs/HandleJoinClass';
-import setupMeeting from 'libs/SetupMetting';
+import joinSection from './join-section';
+import metting from './metting';
+import subscribe from './subscribe';
+import feedback from './feedback';
 
 var server = new mosca.Server(configMosca);
-var debug = DebugM('system');
 
-var arrangeSchedule = function() {
-  debug('CRONJOB is working.');
-  setupMeeting(server);
-};
-
+// matching
 var job01 = new CronJob({
   cronTime: '*/30 * * * * *', // every 30 sec
   onTick: function() {
-    arrangeSchedule();
+    metting(server);
   },
   start: false,
 });
 
-// init app
-debug('STARTED!');
+// send notification for users who has subscribe this morning
+var job02 = new CronJob({
+  // cronTime: '00 27 15 * * *', // 19h55 everyday
+  cronTime: '00 55 19 * * *', // 19h55 everyday
+  onTick: function () {
+    subscribe(server);
+  },
+  start: false,
+});
+
+// ask for feedbacks
+var job03 = new CronJob({
+  cronTime: '00 20 22 * * *', // 22h00 everyday
+  onTick: function () {
+    feedback(server);
+  },
+  start: false,
+});
+
+// init cron jobs
+console.log('STARTED!');
 job01.start();
+job02.start();
+job03.start();
 
-server.on('error', function(err){
-  debug('ERROR', err);
-});
+
+// start broker
+server.on('error', function(err){});
+server.on('clientConnected', function(client) {});
 server.on('ready', function(){
-  debug('Mosca server is up and running on port: ' + configMosca.port);
+  console.log('Mosca server is up and running on port: ' + configMosca.port);
 })
-server.on('clientConnected', function(client) {
-  debug('client connected', client.id);
-});
-
 // fired when a message is received
 server.on('published', function(packet, client) {
-  debug('>>>PACKET', packet.topic);
-
   switch (packet.topic) {
     case 'join-class':
-      handleJoinClass(packet, client, server);
+      joinSection(packet, client, server);
       break;
     default: 
       break;

@@ -5,29 +5,28 @@
 import config from 'config/config';
 import superAgent from 'superagent';
 import randomWord from 'random-word';
-import DebugM from 'debug';
+import moment from 'moment';
 
-import utils from 'libs/utils';
-import request from 'libs/BrokerRequest';
-var debug = DebugM('system');
+import request from 'libs/request';
 
 export default function(server) {
-  debug('SESSION_NAME', utils.getSessionNameByDate());
-  superAgent.get(`${config.API_PATH}/session`)
+  superAgent
+  .get(`${config.API_PATH}/session`)
   .set('Content-Type', 'application/json')
   .query({
     query: JSON.stringify({
-      sessionName: utils.getSessionNameByDate(),
+      sessionName: moment().format('YYYYMMDD'),
       roomName: '',
     }),
     populate: '_user',
   })
-  .end(function(err, res){
-    var sessionList = res ? res.body : [];
-    var room = randomWord();
+  .end(function(err, res) {
     var count = 0;
+    var sessionList = res ? res.body : [];
+    var mmdd = moment().format('MMDD');
+    var room = randomWord() + mmdd;
 
-    console.log('sessionList', sessionList.length);
+    console.log('session', sessionList.length);
     if (sessionList.length % 2 !== 0) {
       sessionList.pop();
     }
@@ -36,8 +35,8 @@ export default function(server) {
       var nextIndex = count === 0 ? index + 1 : index - 1;
       var matched = sessionList[nextIndex] ? sessionList[nextIndex]._user : {};
 
-      const botId = '59fc4cb4e4b02606ed00dbb5';
-      const token = '97pemuDTh2tINlcezl86IAF2O6ZXdnmddM0CenJGUr90D5XdSAuFT0IP8c1g9Rdf';
+      const botId = config.BOT_ID;
+      const token = config.CHAT_TOKEN;
       const block = '59fc4cb5e4b02606ed00de30';
 
       if (i._messenger) {
@@ -62,16 +61,16 @@ export default function(server) {
           roomName: room
         })
       }).then(function(body) {
-        debug('Schedule', 'DONE');
+        console.log('Schedule', 'DONE');
       })
       .catch(function(err) {
-        debug('Schedule', err);
+        console.log('Schedule', err);
       });
 
       count++;
       if (count >= 2) {
         count = 0;
-        room = randomWord();
+        room = randomWord() + mmdd;
       }
     });
   });
