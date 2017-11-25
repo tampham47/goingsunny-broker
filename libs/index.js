@@ -20,6 +20,7 @@ var job01 = new CronJob({
   onTick: function() {
     metting(server);
   },
+  timeZone: 'Asia/Ho_Chi_Minh',
   start: false,
 });
 
@@ -29,6 +30,7 @@ var job02 = new CronJob({
   onTick: function () {
     subscribe();
   },
+  timeZone: 'Asia/Ho_Chi_Minh',
   start: false,
 });
 
@@ -37,6 +39,7 @@ var job03 = new CronJob({
   onTick: function () {
     subscribe(true);
   },
+  timeZone: 'Asia/Ho_Chi_Minh',
   start: false,
 });
 
@@ -46,6 +49,7 @@ var job04 = new CronJob({
   onTick: function () {
     feedback(server);
   },
+  timeZone: 'Asia/Ho_Chi_Minh',
   start: false,
 });
 
