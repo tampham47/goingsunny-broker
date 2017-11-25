@@ -5,24 +5,25 @@
 import config from 'config/config';
 import superAgent from 'superagent';
 import randomWord from 'random-word';
+import moment from 'moment';
 
-import utils from 'libs/utils';
 import request from 'libs/request';
 
 export default function(server) {
-  console.log('SESSION_NAME', utils.getSessionNameByDate());
+  
   superAgent.get(`${config.API_PATH}/session`)
   .set('Content-Type', 'application/json')
   .query({
     query: JSON.stringify({
-      sessionName: utils.getSessionNameByDate(),
+      sessionName: moment().format('YYYYMMDD'),
       roomName: '',
     }),
     populate: '_user',
   })
   .end(function(err, res){
+    var mmdd = moment().format('MMDD');
     var sessionList = res ? res.body : [];
-    var room = randomWord();
+    var room = randomWord() + mmdd;
     var count = 0;
 
     console.log('sessionList', sessionList.length);
@@ -69,7 +70,7 @@ export default function(server) {
       count++;
       if (count >= 2) {
         count = 0;
-        room = randomWord();
+        room = randomWord() + mmdd;
       }
     });
   });

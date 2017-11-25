@@ -33,6 +33,7 @@ var job02 = new CronJob({
   start: false,
 });
 
+// ask for feedbacks
 var job03 = new CronJob({
   cronTime: '00 00 22 * * *', // 22h00 everyday
   onTick: function () {
