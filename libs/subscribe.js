@@ -3,8 +3,8 @@ import superAgent from 'superagent';
 import randomWord from 'random-word';
 import moment from 'moment';
 
-export default (server) => {
-  console.log('subscribe');
+export default (ontime) => {
+  console.log('subscribe', ontime);
   superAgent
     .get(`${config.API_PATH}/subscribe`)
     .set('Content-Type', 'application/json')
@@ -14,10 +14,14 @@ export default (server) => {
       }),
     })
     .end((err, res) => {
+      const subs = res ? res.body : [];
       const botId = config.BOT_ID;
       const token = config.CHAT_TOKEN;
-      const block = '5a1924cfe4b0c921d9db6270';
-      const subs = res ? res.body : [];
+
+      const blockNotif = '5a1924cfe4b0c921d9db6270'; // subscribe
+      const blockStart = '5a192b31e4b0c921da01306a'; // subscribe-ontime
+      let block = blockNotif;
+      if (ontime) { block = blockStart; }
 
       // broadcast message
       subs.forEach((i, index) => {

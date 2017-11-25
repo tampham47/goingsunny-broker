@@ -25,16 +25,23 @@ var job01 = new CronJob({
 
 // send notification for users who has subscribe this morning
 var job02 = new CronJob({
-  // cronTime: '00 27 15 * * *', // 19h55 everyday
-  cronTime: '00 55 19 * * *', // 19h55 everyday
+  cronTime: '00 50 19 * * *', // 19h50 everyday
   onTick: function () {
-    subscribe(server);
+    subscribe();
+  },
+  start: false,
+});
+
+var job03 = new CronJob({
+  cronTime: '00 00 20 * * *', // 20h00 everyday
+  onTick: function () {
+    subscribe(true);
   },
   start: false,
 });
 
 // ask for feedbacks
-var job03 = new CronJob({
+var job04 = new CronJob({
   cronTime: '00 20 22 * * *', // 22h00 everyday
   onTick: function () {
     feedback(server);
@@ -47,6 +54,7 @@ console.log('STARTED!');
 job01.start();
 job02.start();
 job03.start();
+job04.start();
 
 
 // start broker
