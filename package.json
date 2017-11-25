@@ -6,12 +6,8 @@
   "scripts": {
     "start": "DEBUG=system NODE_PATH=./ PORT=5550 nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-
     "login": "ssh -t -i _deploy/goingsunny-oregon.pem centos@35.162.241.129",
     "deploy": "yarn run login 'cd prod/gsun-broker && git pull && pm2 startOrRestart pm2.json --env development'",
-
-    "deploy_prod": "yarn run login 'cd prod/gsun-broker && git pull && pm2 startOrRestart pm2.json --env development'",
-
     "postinstall": ""
   },
   "keywords": [
