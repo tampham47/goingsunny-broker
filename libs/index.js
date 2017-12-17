@@ -11,6 +11,7 @@ import joinSection from './join-section';
 import metting from './metting';
 import subscribe from './subscribe';
 import feedback from './feedback';
+import remind from './remind';
 
 var server = new mosca.Server(configMosca);
 
@@ -53,12 +54,23 @@ var job04 = new CronJob({
   start: false,
 });
 
+// Thurday remind
+var job05 = new CronJob({
+  cronTime: '00 30 08 * * THU', // THU 08 30
+  onTick: function () {
+    remind(server);
+  },
+  timeZone: 'Asia/Ho_Chi_Minh',
+  start: false,
+});
+
 // init cron jobs
 console.log('STARTED!');
 job01.start();
 job02.start();
 job03.start();
 job04.start();
+// job05.start();
 
 
 // start broker
